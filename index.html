@@ -63,6 +63,15 @@ h1{font-size:1.75rem;font-weight:700;line-height:1.25}
 .linkbtn{background:none;border:0;color:var(--mute);font:inherit;text-decoration:underline;padding:12px;cursor:pointer}
 .adh{font-size:1.2rem;margin:8px 0 0}
 #adm h3{font-size:1.05rem;margin:22px 0 0}
+.hv{margin:4px 0 0;font-family:"Noto Serif Bengali","Hind Siliguri",serif;font-size:.92rem;line-height:1.6;color:var(--mute)}
+.hm{display:block;font-size:.78rem;margin-top:2px;opacity:.85}
+.plates{display:grid;margin:0 0 6px;cursor:pointer}
+.plate{grid-area:1/1;visibility:hidden;border:1px solid var(--line);border-inline-start:4px solid var(--red);background:var(--surface);border-radius:14px;padding:10px 14px;font-family:"Noto Serif Bengali","Hind Siliguri",serif;font-size:.95rem;line-height:1.65;color:var(--ink,inherit)}
+.plate.on{visibility:visible}
+.plate .hm{display:block;font-family:"Hind Siliguri",sans-serif;font-size:.78rem;color:var(--mute);margin-top:2px}
+.pd{grid-area:1/1;align-self:end;justify-self:end;display:flex;gap:5px;padding:0 12px 8px;z-index:1}
+.pd i{width:6px;height:6px;border-radius:50%;background:var(--mute);opacity:.35}
+.pd i.on{background:var(--red);opacity:1}
 </style>
 </head>
 <body>
@@ -71,16 +80,21 @@ h1{font-size:1.75rem;font-weight:700;line-height:1.25}
   <header class="brand">
     <div class="logo">
       <img src="logo.png" alt="ব্লাড গ্রুপ জঙ্গল সলিমপুর লোগো" hidden onload="this.hidden=false;this.nextElementSibling.style.display='none'">
-      <svg viewBox="0 0 64 64" role="img" aria-label="ব্লাড গ্রুপ জঙ্গল সলিমপুর লোগো"><path style="fill:var(--red)" d="M32 4C32 4 12 27 12 40a20 20 0 0 0 40 0C52 27 32 4 32 4z"/><path style="fill:var(--surface)" d="M32 52L22.5 42.5C18 38 18 31.5 23 29.5C26.5 28 30 29.5 32 33C34 29.5 37.5 28 41 29.5C46 31.5 46 38 41.5 42.5Z"/></svg>
+      <svg viewBox="0 0 64 64" role="img" aria-label="ব্লাড গ্রুপ জঙ্গল সলিমপুর লোগো"><defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff2e4d"/><stop offset="1" stop-color="#c20024"/></linearGradient></defs><path fill="url(#lg)" d="M32 4C32 4 12 27 12 40a20 20 0 0 0 40 0C52 27 32 4 32 4z"/><path fill="#fff" d="M32 49C32 49 19 41 19 33C19 28.5 22.3 26 25.8 26C28.4 26 30.7 27.4 32 29.8C33.3 27.4 35.6 26 38.2 26C41.7 26 45 28.5 45 33C45 41 32 49 32 49Z"/></svg>
     </div>
     <div class="bt">
-      <h1>ব্লাড গ্রুপ জঙ্গল সলিমপুর</h1>
+      <h1>ব্লাড গ্রুপ, জঙ্গল সলিমপুর।</h1>
       <p class="sub">বিপদের দিনে ভাইবোনের পাশে দাঁড়ান।</p>
     </div>
   </header>
+  <section class="plates" aria-label="কুরআন ও হাদিসের উৎসাহবাণী">
+    <div class="plate on">যে একজন মানুষের প্রাণ বাঁচাল, সে যেন সমগ্র মানবজাতির প্রাণ বাঁচাল।<span class="hm">কুরআন, সূরা আল-মায়িদা ৫:৩২ (ভাবার্থ)</span></div>
+    <div class="plate">যতক্ষণ বান্দা তার ভাইয়ের সাহায্যে থাকে, আল্লাহ ততক্ষণ বান্দার সাহায্যে থাকেন।<span class="hm">হাদিস, সহিহ মুসলিম ২৬৯৯ (ভাবার্থ)</span></div>
+    <div class="pd" aria-hidden="true"><i class="on"></i><i></i></div>
+  </section>
   <nav class="tabs" role="tablist">
-    <button role="tab" data-t="find" aria-selected="true"><span class="ti" aria-hidden="true">🔎</span><span>রক্ত খুঁজুন</span></button>
-    <button role="tab" data-t="reg" aria-selected="false"><span class="ti" aria-hidden="true">🩸</span><span>দাতা হোন</span></button>
+    <button role="tab" data-t="find" aria-selected="false"><span class="ti" aria-hidden="true">🩸</span><span>রক্তের গ্রুপ</span></button>
+    <button role="tab" data-t="reg" aria-selected="false"><span class="ti" aria-hidden="true">🙋</span><span>দাতা হোন</span></button>
     <button role="tab" data-t="why" aria-selected="false"><span class="ti" aria-hidden="true">📖</span><span>রক্তদানের ফজিলত</span></button>
   </nav>
   <div class="stats">
@@ -88,13 +102,12 @@ h1{font-size:1.75rem;font-weight:700;line-height:1.25}
     <div class="stat"><b id="sReady">0</b><span>এখন দিতে পারবেন</span></div>
   </div>
 
-  <section id="find">
+  <section id="find" hidden>
     <label>রক্তের গ্রুপ</label>
     <div class="groups" id="groups"></div>
     <label for="areaF">সমাজ/এলাকা</label>
     <select id="areaF"></select>
     <div id="list"></div>
-    <p style="text-align:center"><a class="linkbtn" href="privacy.html">গোপনীয়তা নীতি</a> <button class="linkbtn" id="admOpen">পরিচালকের জন্য</button></p>
   </section>
 
   <section id="reg" hidden>
@@ -164,6 +177,7 @@ h1{font-size:1.75rem;font-weight:700;line-height:1.25}
     <p>এখানে দেওয়া ভাইবোনদের নাম ও নম্বর আমানত। শুধু রক্তের প্রয়োজনেই ব্যবহার করুন, অন্য কাজে নয়।</p>
     <p class="note">রক্তদানের আগে শারীরিক কোনো সন্দেহ থাকলে চিকিৎসকের পরামর্শ নিন।</p>
   </section>
+  <p style="text-align:center"><a class="linkbtn" href="privacy.html">গোপনীয়তা নীতি</a> <button class="linkbtn" id="admOpen">পরিচালকের জন্য</button></p>
 </div>
 
 <script>
@@ -222,7 +236,7 @@ function tab(t){["find","reg","why","adm"].forEach(function(x){document.getEleme
   rpc("get_areas").then(function(r){if(r&&r.length){AREAS=r.map(function(x){return x.name});fill(document.getElementById("areaF"),AREAS,"সব সমাজ");fill(document.getElementById("areaR"),AREAS)}}).catch(function(){});
   document.getElementById("areaF").addEventListener("change",render);
   document.getElementById("save").addEventListener("click",save);
-  document.querySelectorAll(".tabs button").forEach(function(b){b.addEventListener("click",function(){tab(b.dataset.t)})});
+  document.querySelectorAll(".tabs button").forEach(function(b){b.addEventListener("click",function(){tab(b.getAttribute("aria-selected")==="true"?"":b.dataset.t)})});
   render()})();
 var adminPin="";
 var AM={wrong_pin:"পিন ঠিক নয়।",invalid:"নাম ঠিকমতো লিখুন।",exists:"এই নামে সমাজ আগেই আছে।",missing:"সমাজটি পাওয়া যায়নি।",added:"আলহামদুলিল্লাহ, নতুন সমাজ যোগ হয়েছে।",renamed:"আলহামদুলিল্লাহ, নাম বদলানো হয়েছে।"};
@@ -244,6 +258,10 @@ document.getElementById("aRename").addEventListener("click",function(){
   rpc("admin_rename_area",{p_pin:adminPin,p_old:document.getElementById("aOld").value,p_new:document.getElementById("aRen").value}).then(function(r){
     amsg(AM[r]||"কিছু একটা ভুল হয়েছে।",r!=="renamed");
     if(r==="renamed"){document.getElementById("aRen").value="";reloadAreas().then(render)}}).catch(aFail)});
+(function(){var P=document.querySelectorAll(".plate"),D=document.querySelectorAll(".pd i"),n=0,t;
+function go(k){P[n].classList.remove("on");D[n].classList.remove("on");n=k%P.length;P[n].classList.add("on");D[n].classList.add("on")}
+function run(){clearInterval(t);if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches)t=setInterval(function(){go(n+1)},7000)}
+document.querySelector(".plates").addEventListener("click",function(){go(n+1);run()});run()})();
 </script>
 
 </body>
