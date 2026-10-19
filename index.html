@@ -127,6 +127,7 @@ h1{font-size:1.75rem;font-weight:700;line-height:1.25}
     <input id="pin" inputmode="numeric" maxlength="4" type="password">
     <div class="note">নিবন্ধন করলে আপনার নাম, এলাকা ও মোবাইল নম্বর তালিকায় সবাই দেখতে পাবেন। নিয়ত খাঁটি রাখুন, আল্লাহ কবুল করুন।</div>
     <button class="primary" id="save">বিসমিল্লাহ, সংরক্ষণ করুন</button>
+    <button class="linkbtn" id="del" type="button">আমার তথ্য তালিকা থেকে মুছে ফেলুন</button>
     <div id="regMsg" role="status"></div>
   </section>
 
@@ -213,7 +214,7 @@ function render(){
       return '<div class="card"><div class="badge">'+esc(d.grp)+'</div><div class="info"><b>'+esc(d.name)+'</b><div class="meta">'+esc(d.area)+'</div><span class="tag '+s.s+'">'+s.t+'</span></div><a class="call" href="tel:'+esc(d.phone)+'">কল করুন</a></div>'}).join("")
   }).catch(function(){el.innerHTML='<div class="empty">তালিকা আনা যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।</div>'})}
 function msg(t,err){var m=document.getElementById("regMsg");m.className="msg"+(err?" err":"");m.textContent=t}
-var MSG={created:"আলহামদুলিল্লাহ, নিবন্ধন সম্পন্ন হয়েছে। আল্লাহ আপনাকে উত্তম প্রতিদান দিন।",updated:"আলহামদুলিল্লাহ, তথ্য হালনাগাদ হয়েছে।",wrong_pin:"এই নম্বর আগে নিবন্ধিত। তথ্য বদলাতে আগের পিন দিন।",bad_pin:"৪ সংখ্যার একটি পিন দিন।",invalid:"তথ্যে ভুল আছে। তারিখ ও নম্বর দেখে আবার দিন।"};
+var MSG={created:"আলহামদুলিল্লাহ, নিবন্ধন সম্পন্ন হয়েছে। আল্লাহ আপনাকে উত্তম প্রতিদান দিন।",updated:"আলহামদুলিল্লাহ, তথ্য হালনাগাদ হয়েছে।",wrong_pin:"এই নম্বর আগে নিবন্ধিত। তথ্য বদলাতে আগের পিন দিন।",bad_pin:"৪ সংখ্যার একটি পিন দিন।",invalid:"তথ্যে ভুল আছে। তারিখ ও নম্বর দেখে আবার দিন।",locked:"অনেকবার ভুল পিন দেওয়া হয়েছে। ৩০ মিনিট পরে আবার চেষ্টা করুন।"};
 function save(){
   var n=document.getElementById("name").value.trim(),p=enDigits(document.getElementById("phone").value.trim()),pin=enDigits(document.getElementById("pin").value.trim());
   if(n.length<2)return msg("নাম লিখুন।",1);
@@ -243,6 +244,15 @@ function tab(t){["find","reg","why","adm"].forEach(function(x){document.getEleme
   document.getElementById("save").addEventListener("click",save);
   document.querySelectorAll(".tabs button").forEach(function(b){b.addEventListener("click",function(){tab(b.dataset.t)})});
   render();tab("find")})();
+document.getElementById("del").addEventListener("click",function(){
+  var p=enDigits(document.getElementById("phone").value.trim()),pin=enDigits(document.getElementById("pin").value.trim());
+  if(!/^01\d{9}$/.test(p))return msg("মুছতে আপনার মোবাইল নম্বর দিন।",1);
+  if(!/^\d{4}$/.test(pin))return msg(MSG.bad_pin,1);
+  if(!confirm("আপনার নাম ও নম্বর তালিকা থেকে স্থায়ীভাবে মুছে যাবে। নিশ্চিত?"))return;
+  rpc("delete_donor",{p_phone:p,p_pin:pin}).then(function(r){
+    if(r==="deleted"){msg("আলহামদুলিল্লাহ, আপনার তথ্য মুছে ফেলা হয়েছে।");render()}
+    else msg(r==="wrong_pin"?"পিন ঠিক নয়।":(MSG[r]||"কিছু একটা ভুল হয়েছে।"),1)
+  }).catch(function(){msg("মোছা যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।",1)})});
 var adminPin="";
 var AM={wrong_pin:"পিন ঠিক নয়।",invalid:"নাম ঠিকমতো লিখুন।",exists:"এই নামে সমাজ আগেই আছে।",missing:"সমাজটি পাওয়া যায়নি।",added:"আলহামদুলিল্লাহ, নতুন সমাজ যোগ হয়েছে।",renamed:"আলহামদুলিল্লাহ, নাম বদলানো হয়েছে।"};
 function amsg(t,err){var m=document.getElementById("aMsg");m.className="msg"+(err?" err":"");m.textContent=t}
