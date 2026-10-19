@@ -53,18 +53,20 @@ select,input{width:100%;font:inherit;padding:11px 12px;border:1.5px solid var(--
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .brand{display:flex;align-items:center;gap:14px;margin:8px 0 16px}.logo{flex:none;width:68px;height:68px}.logo img,.logo svg{width:100%;height:100%;object-fit:contain;display:block}.bt{min-width:0}.bt h1{margin:0}.bt .sub{margin:2px 0 0;font-size:.95rem}
 [hidden]{display:none!important}
+.bis{text-align:center;color:var(--mute);margin:6px 0 0;font-size:.95rem}
 </style>
 </head>
 <body>
 <div class="wrap">
+  <p class="bis">বিসমিল্লাহির রাহমানির রাহিম</p>
   <header class="brand">
     <div class="logo">
       <img src="logo.png" alt="রক্তদান লোগো" hidden onload="this.hidden=false;this.nextElementSibling.style.display='none'">
-      <svg viewBox="0 0 64 64" role="img" aria-label="রক্তদান লোগো"><path style="fill:var(--red)" d="M32 4C32 4 12 27 12 40a20 20 0 0 0 40 0C52 27 32 4 32 4z"/><path style="fill:var(--surface)" d="M29 31h6v7h7v6h-7v7h-6v-7h-7v-6h7z"/></svg>
+      <svg viewBox="0 0 64 64" role="img" aria-label="রক্তদান লোগো"><path style="fill:var(--red)" d="M32 4C32 4 12 27 12 40a20 20 0 0 0 40 0C52 27 32 4 32 4z"/><path style="fill:var(--surface)" d="M32 52L22.5 42.5C18 38 18 31.5 23 29.5C26.5 28 30 29.5 32 33C34 29.5 37.5 28 41 29.5C46 31.5 46 38 41.5 42.5Z"/></svg>
     </div>
     <div class="bt">
       <h1>রক্তদান</h1>
-      <p class="sub">জঙ্গল সলিমপুর: প্রয়োজনে কাছের মানুষকেই খুঁজে নিন।</p>
+      <p class="sub">জঙ্গল সলিমপুর: বিপদের দিনে ভাইবোনের পাশে দাঁড়ান।</p>
     </div>
   </header>
   <div class="stats">
@@ -95,15 +97,18 @@ select,input{width:100%;font:inherit;padding:11px 12px;border:1.5px solid var(--
     <input id="last" type="date">
     <label for="pin">পিন (৪ সংখ্যা, পরে তথ্য বদলাতে লাগবে)</label>
     <input id="pin" inputmode="numeric" maxlength="4" type="password">
-    <div class="note">নিবন্ধন করলে আপনার নাম, এলাকা ও মোবাইল নম্বর তালিকায় সবাই দেখতে পাবেন।</div>
-    <button class="primary" id="save">তথ্য সংরক্ষণ করুন</button>
+    <div class="note">নিবন্ধন করলে আপনার নাম, এলাকা ও মোবাইল নম্বর তালিকায় সবাই দেখতে পাবেন। নিয়ত খাঁটি রাখুন, আল্লাহ কবুল করুন।</div>
+    <button class="primary" id="save">বিসমিল্লাহ, সংরক্ষণ করুন</button>
     <div id="regMsg" role="status"></div>
   </section>
 
   <section id="why" hidden class="read">
-    <h2>একজনের রক্তে কয়েকজনের প্রাণ</h2>
-    <p>এক ব্যাগ রক্ত থেকে আলাদা উপাদান করে একাধিক রোগীর কাজে লাগানো যায়। দুর্ঘটনা, প্রসবকালীন জটিলতা, থ্যালাসেমিয়া ও অপারেশনে রক্ত অনেক সময় জরুরি হয়।</p>
-    <div class="verse">যে একজন মানুষের প্রাণ বাঁচাল, সে যেন পুরো মানবজাতিকে বাঁচাল।<br><span class="meta">সূরা আল-মায়িদা, ৫:৩২ (ভাবার্থ)</span></div>
+    <h2>একটি প্রাণ বাঁচানো, সব মানুষকে বাঁচানোর মতো</h2>
+    <div class="verse">যে একজন মানুষের প্রাণ বাঁচাল, সে যেন সমগ্র মানবজাতির প্রাণ বাঁচাল।<br><span class="meta">সূরা আল-মায়িদা, ৫:৩২ (ভাবার্থ)</span></div>
+    <h2>ভাইয়ের প্রয়োজনে এগিয়ে আসা</h2>
+    <div class="verse">যে ব্যক্তি তার ভাইয়ের প্রয়োজন পূরণে লেগে থাকে, আল্লাহ তার প্রয়োজন পূরণে থাকেন।<br><span class="meta">সহিহ বুখারি ২৪৪২, সহিহ মুসলিম ২৫৮০ (ভাবার্থ)</span></div>
+    <div class="verse">মুমিনরা পারস্পরিক ভালোবাসা, দয়া ও সহমর্মিতায় একটি দেহের মতো। দেহের একটি অঙ্গ কষ্ট পেলে গোটা দেহ জেগে থাকে ও জ্বরে ভোগে।<br><span class="meta">সহিহ বুখারি ৬০১১, সহিহ মুসলিম ২৫৮৬ (ভাবার্থ)</span></div>
+    <p>দুর্ঘটনা, প্রসবকালীন জটিলতা, থ্যালাসেমিয়া ও অপারেশনে অনেক সময় জরুরি ভিত্তিতে রক্ত লাগে। আল্লাহর সন্তুষ্টির নিয়তে এগিয়ে এলে আপনার এক ব্যাগ রক্ত কারও জীবন ফিরিয়ে দিতে পারে, ইনশাআল্লাহ।</p>
     <h2>সাধারণ কিছু ভুল ধারণা</h2>
     <ul>
       <li><b>"রক্ত দিলে দুর্বল হয়ে যাব।"</b> সুস্থ মানুষের শরীর কয়েক সপ্তাহে রক্ত পূরণ করে নেয়। দানের পর বিশ্রাম ও পানি-খাবার নিলেই চলে।</li>
@@ -113,21 +118,22 @@ select,input{width:100%;font:inherit;padding:11px 12px;border:1.5px solid var(--
     <ul>
       <li>বয়স প্রায় ১৮ থেকে ৬০ বছর, ওজন সাধারণত ৫০ কেজি বা তার বেশি</li>
       <li>পুরুষ ৩ মাস ও নারী ৪ মাস পর পর দিতে পারেন</li>
-      <li>সন্দেহ থাকলে রক্তদানের আগে চিকিৎসকের পরামর্শ নিন</li>
     </ul>
     <h2>দানের আগে ও পরে</h2>
     <ul>
       <li>আগে: ভালো ঘুম, হালকা খাবার, প্রচুর পানি</li>
       <li>পরে: ১৫ মিনিট বিশ্রাম, তরল ও খাবার, সেদিন ভারী কাজ বাদ</li>
     </ul>
-    <p class="note">এই লেখাগুলো নমুনা। প্রকাশের আগে স্থানীয় চিকিৎসক বা ব্লাড ব্যাংক দিয়ে মিলিয়ে নিন।</p>
+    <h2>আমানতের কথা</h2>
+    <p>এখানে দেওয়া ভাইবোনদের নাম ও নম্বর আমানত। শুধু রক্তের প্রয়োজনেই ব্যবহার করুন, অন্য কাজে নয়।</p>
+    <p class="note">রক্তদানের আগে শারীরিক কোনো সন্দেহ থাকলে চিকিৎসকের পরামর্শ নিন।</p>
   </section>
 </div>
 
 <nav class="tabs" role="tablist">
-  <button role="tab" data-t="find" aria-selected="true">খুঁজুন</button>
-  <button role="tab" data-t="reg" aria-selected="false">নিবন্ধন</button>
-  <button role="tab" data-t="why" aria-selected="false">রক্তদানে উৎসাহ</button>
+  <button role="tab" data-t="find" aria-selected="true">রক্ত খুঁজুন</button>
+  <button role="tab" data-t="reg" aria-selected="false">দাতা হোন</button>
+  <button role="tab" data-t="why" aria-selected="false">রক্তদানের ফজিলত</button>
 </nav>
 
 <script>
@@ -156,12 +162,12 @@ function render(){
     document.getElementById("sReady").textContent=toBn(s.ready)}).catch(function(){});
   rpc("list_donors",{p_group:selG||null,p_area:document.getElementById("areaF").value||null}).then(function(list){
     list.sort(function(x,y){return status(y).ok-status(x).ok});
-    if(!list.length){el.innerHTML='<div class="empty">এই গ্রুপে এখনও কেউ নিবন্ধন করেননি। "নিবন্ধন" ট্যাবে গিয়ে প্রথম দাতা হতে পারেন।</div>';return}
+    if(!list.length){el.innerHTML='<div class="empty">এই গ্রুপে এখনও কেউ নাম লেখাননি। "দাতা হোন" ট্যাবে গিয়ে আপনিই প্রথম দাতা হতে পারেন, ইনশাআল্লাহ।</div>';return}
     el.innerHTML=list.map(function(d){var s=status(d);
       return '<div class="card"><div class="badge">'+esc(d.grp)+'</div><div class="info"><b>'+esc(d.name)+'</b><div class="meta">'+esc(d.area)+'</div><span class="tag '+s.s+'">'+s.t+'</span></div><a class="call" href="tel:'+esc(d.phone)+'">কল করুন</a></div>'}).join("")
   }).catch(function(){el.innerHTML='<div class="empty">তালিকা আনা যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।</div>'})}
 function msg(t,err){var m=document.getElementById("regMsg");m.className="msg"+(err?" err":"");m.textContent=t}
-var MSG={created:"নিবন্ধন সম্পন্ন হয়েছে। ধন্যবাদ!",updated:"তথ্য হালনাগাদ হয়েছে।",wrong_pin:"এই নম্বর আগে নিবন্ধিত। তথ্য বদলাতে আগের পিন দিন।",bad_pin:"৪ সংখ্যার একটি পিন দিন।",invalid:"তথ্যে ভুল আছে। তারিখ ও নম্বর দেখে আবার দিন।"};
+var MSG={created:"আলহামদুলিল্লাহ, নিবন্ধন সম্পন্ন হয়েছে। আল্লাহ আপনাকে উত্তম প্রতিদান দিন।",updated:"আলহামদুলিল্লাহ, তথ্য হালনাগাদ হয়েছে।",wrong_pin:"এই নম্বর আগে নিবন্ধিত। তথ্য বদলাতে আগের পিন দিন।",bad_pin:"৪ সংখ্যার একটি পিন দিন।",invalid:"তথ্যে ভুল আছে। তারিখ ও নম্বর দেখে আবার দিন।"};
 function save(){
   var n=document.getElementById("name").value.trim(),p=document.getElementById("phone").value.trim(),pin=document.getElementById("pin").value.trim();
   if(n.length<2)return msg("নাম লিখুন।",1);
