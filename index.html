@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>জঙ্গল সলিমপুর রক্তদাতা তালিকা</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#f6f7f9;--surface:#fff;--ink:#1c2530;--mute:#5d6a78;--line:#dfe3e8;--red:#b3122e;--redtint:#fce8ec;--ok:#17704f;--oktint:#e2f4ec;--wait:#8a5a00;--waittint:#fdf0d5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12171d;--surface:#1b222b;--ink:#eef1f4;--mute:#9aa7b4;--line:#2c3541;--red:#ff6b83;--redtint:#3a1b23;--ok:#5fd3a2;--oktint:#16332a;--wait:#f0c25b;--waittint:#3a2f14;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#12171d;--surface:#1b222b;--ink:#eef1f4;--mute:#9aa7b4;--line:#2c3541;--red:#ff6b83;--redtint:#3a1b23;--ok:#5fd3a2;--oktint:#16332a;--wait:#f0c25b;--waittint:#3a2f14;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Hind Siliguri","Noto Sans Bengali","Kalpurush",system-ui,sans-serif;line-height:1.6;font-size:16px}
+.wrap{max-width:640px;margin:0 auto;padding:16px 16px 96px}
+h1{font-size:1.5rem;line-height:1.3;margin:8px 0 4px;font-weight:700}
+.sub{color:var(--mute);margin:0 0 16px}
+.stats{display:flex;gap:10px;margin-bottom:16px}
+.stat{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.stat b{display:block;font-size:1.6rem;line-height:1.2;color:var(--red)}
+.stat span{color:var(--mute);font-size:.9rem}
+.tabs{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+.tabs button{flex:1;border:0;background:none;color:var(--mute);font:inherit;font-weight:600;padding:12px 4px;cursor:pointer;border-top:3px solid transparent}
+.tabs button[aria-selected="true"]{color:var(--red);border-top-color:var(--red)}
+button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+section[hidden]{display:none}
+.groups{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0 14px}
+.g{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:14px;padding:14px 0;font:inherit;font-size:1.3rem;font-weight:700;cursor:pointer}
+.g[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .g[aria-pressed="true"]{color:#1a0a0e}}
+label{display:block;font-weight:600;margin:12px 0 4px}
+select,input{width:100%;font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0;display:flex;gap:12px;align-items:center}
+.badge{flex:none;width:52px;height:52px;border-radius:50%;background:var(--redtint);color:var(--red);display:grid;place-items:center;font-weight:700;font-size:1.15rem}
+.info{flex:1;min-width:0}
+.info b{display:block}
+.meta{color:var(--mute);font-size:.9rem}
+.tag{display:inline-block;border-radius:99px;padding:0 10px;font-size:.85rem;font-weight:600;margin-top:2px}
+.ready{background:var(--oktint);color:var(--ok)}
+.wait{background:var(--waittint);color:var(--wait)}
+.call{flex:none;background:var(--red);color:#fff;text-decoration:none;border-radius:10px;padding:10px 14px;font-weight:600}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .call{color:#1a0a0e}}
+.primary{width:100%;margin-top:18px;border:0;border-radius:12px;background:var(--red);color:#fff;font:inherit;font-weight:700;padding:14px;cursor:pointer;font-size:1.05rem}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .primary{color:#1a0a0e}}
+.note{background:var(--waittint);color:var(--wait);border-radius:10px;padding:10px 12px;font-size:.92rem;margin:12px 0}
+.msg{margin-top:12px;padding:10px 12px;border-radius:10px;background:var(--oktint);color:var(--ok);font-weight:600}
+.msg.err{background:var(--redtint);color:var(--red)}
+.empty{color:var(--mute);text-align:center;padding:24px 8px}
+.read h2{font-size:1.15rem;margin:22px 0 6px}
+.read p,.read li{margin:4px 0}
+.read ul{padding-left:20px}
+.verse{border-left:4px solid var(--red);padding:4px 0 4px 12px;margin:10px 0;background:var(--redtint);border-radius:0 10px 10px 0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>জঙ্গল সলিমপুর রক্তদাতা তালিকা</h1>
+  <p class="sub">প্রয়োজনে কাছের মানুষকেই খুঁজে নিন।</p>
+  <div class="stats">
+    <div class="stat"><b id="sTotal">0</b><span>মোট দাতা</span></div>
+    <div class="stat"><b id="sReady">0</b><span>এখন দিতে পারবেন</span></div>
+  </div>
+
+  <section id="find">
+    <label>রক্তের গ্রুপ</label>
+    <div class="groups" id="groups"></div>
+    <label for="areaF">সমাজ/এলাকা</label>
+    <select id="areaF"></select>
+    <div id="list"></div>
+  </section>
+
+  <section id="reg" hidden>
+    <label for="name">নাম</label>
+    <input id="name" autocomplete="name">
+    <label for="phone">মোবাইল নম্বর</label>
+    <input id="phone" inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX">
+    <div class="row2">
+      <div><label for="grp">রক্তের গ্রুপ</label><select id="grp"></select></div>
+      <div><label for="gen">লিঙ্গ</label><select id="gen"><option value="m">পুরুষ</option><option value="f">নারী</option></select></div>
+    </div>
+    <label for="areaR">সমাজ/এলাকা</label>
+    <select id="areaR"></select>
+    <label for="last">সর্বশেষ রক্ত দিয়েছেন (না দিলে ফাঁকা রাখুন)</label>
+    <input id="last" type="date">
+    <label for="pin">পিন (৪ সংখ্যা, পরে তথ্য বদলাতে লাগবে)</label>
+    <input id="pin" inputmode="numeric" maxlength="4" type="password">
+    <div class="note">নিবন্ধন করলে আপনার নাম, এলাকা ও মোবাইল নম্বর তালিকায় সবাই দেখতে পাবেন।</div>
+    <button class="primary" id="save">তথ্য সংরক্ষণ করুন</button>
+    <div id="regMsg" role="status"></div>
+  </section>
+
+  <section id="why" hidden class="read">
+    <h2>একজনের রক্তে কয়েকজনের প্রাণ</h2>
+    <p>এক ব্যাগ রক্ত থেকে আলাদা উপাদান করে একাধিক রোগীর কাজে লাগানো যায়। দুর্ঘটনা, প্রসবকালীন জটিলতা, থ্যালাসেমিয়া ও অপারেশনে রক্ত অনেক সময় জরুরি হয়।</p>
+    <div class="verse">যে একজন মানুষের প্রাণ বাঁচাল, সে যেন পুরো মানবজাতিকে বাঁচাল।<br><span class="meta">সূরা আল-মায়িদা, ৫:৩২ (ভাবার্থ)</span></div>
+    <h2>সাধারণ কিছু ভুল ধারণা</h2>
+    <ul>
+      <li><b>"রক্ত দিলে দুর্বল হয়ে যাব।"</b> সুস্থ মানুষের শরীর কয়েক সপ্তাহে রক্ত পূরণ করে নেয়। দানের পর বিশ্রাম ও পানি-খাবার নিলেই চলে।</li>
+      <li><b>"এতে অসুখ হয়।"</b> নতুন জীবাণুমুক্ত সরঞ্জাম একবারই ব্যবহার হয়।</li>
+    </ul>
+    <h2>সাধারণত কারা দিতে পারেন</h2>
+    <ul>
+      <li>বয়স প্রায় ১৮ থেকে ৬০ বছর, ওজন সাধারণত ৫০ কেজি বা তার বেশি</li>
+      <li>পুরুষ ৩ মাস ও নারী ৪ মাস পর পর দিতে পারেন</li>
+      <li>সন্দেহ থাকলে রক্তদানের আগে চিকিৎসকের পরামর্শ নিন</li>
+    </ul>
+    <h2>দানের আগে ও পরে</h2>
+    <ul>
+      <li>আগে: ভালো ঘুম, হালকা খাবার, প্রচুর পানি</li>
+      <li>পরে: ১৫ মিনিট বিশ্রাম, তরল ও খাবার, সেদিন ভারী কাজ বাদ</li>
+    </ul>
+    <p class="note">এই লেখাগুলো নমুনা। প্রকাশের আগে স্থানীয় চিকিৎসক বা ব্লাড ব্যাংক দিয়ে মিলিয়ে নিন।</p>
+  </section>
+</div>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" data-t="find" aria-selected="true">খুঁজুন</button>
+  <button role="tab" data-t="reg" aria-selected="false">নিবন্ধন</button>
+  <button role="tab" data-t="why" aria-selected="false">রক্তদানে উৎসাহ</button>
+</nav>
+
+<script>
+var SB_URL="https://rvtwyjnqkqmpqhazyrnw.supabase.co";
+var SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2dHd5am5xa3FtcHFoYXp5cm53Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIzNzQzOTMsImV4cCI6MjEwNzk1MDM5M30.DY0LqrcSA3OCsOWXGv2RdysSCBMfaFFCbhvyWurVCk4";
+var GROUPS=["A+","A-","B+","B-","AB+","AB-","O+","O-"];
+var AREAS=[];for(var i=1;i<=11;i++)AREAS.push("সমাজ "+toBn(i));
+var selG="";
+function toBn(n){return String(n).replace(/\d/g,function(d){return "০১২৩৪৫৬৭৮৯"[d]})}
+function rpc(fn,args){
+  return fetch(SB_URL+"/rest/v1/rpc/"+fn,{method:"POST",headers:{apikey:SB_KEY,Authorization:"Bearer "+SB_KEY,"Content-Type":"application/json"},body:JSON.stringify(args||{})})
+    .then(function(r){return r.json().then(function(j){if(!r.ok)throw j;return j})})}
+function daysSince(s){return Math.floor((Date.now()-new Date(s).getTime())/864e5)}
+function status(d){var need=d.gender==="f"?120:90;
+  if(!d.last_donation)return{ok:1,t:"কখনও দেননি, দিতে পারবেন",s:"ready"};
+  var n=daysSince(d.last_donation);
+  if(n>=need)return{ok:1,t:"শেষ দান "+toBn(n)+" দিন আগে, দিতে পারবেন",s:"ready"};
+  return{ok:0,t:"আরও "+toBn(need-n)+" দিন পরে দিতে পারবেন",s:"wait"}}
+function fill(sel,items,first){sel.innerHTML=(first?'<option value="">'+first+'</option>':'')+items.map(function(a){return '<option>'+a+'</option>'}).join('')}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function render(){
+  var el=document.getElementById("list");
+  el.innerHTML='<div class="empty">তালিকা আনা হচ্ছে…</div>';
+  rpc("get_stats").then(function(r){var s=r[0]||{total:0,ready:0};
+    document.getElementById("sTotal").textContent=toBn(s.total);
+    document.getElementById("sReady").textContent=toBn(s.ready)}).catch(function(){});
+  rpc("list_donors",{p_group:selG||null,p_area:document.getElementById("areaF").value||null}).then(function(list){
+    list.sort(function(x,y){return status(y).ok-status(x).ok});
+    if(!list.length){el.innerHTML='<div class="empty">এই গ্রুপে এখনও কেউ নিবন্ধন করেননি। "নিবন্ধন" ট্যাবে গিয়ে প্রথম দাতা হতে পারেন।</div>';return}
+    el.innerHTML=list.map(function(d){var s=status(d);
+      return '<div class="card"><div class="badge">'+esc(d.grp)+'</div><div class="info"><b>'+esc(d.name)+'</b><div class="meta">'+esc(d.area)+'</div><span class="tag '+s.s+'">'+s.t+'</span></div><a class="call" href="tel:'+esc(d.phone)+'">কল করুন</a></div>'}).join("")
+  }).catch(function(){el.innerHTML='<div class="empty">তালিকা আনা যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।</div>'})}
+function msg(t,err){var m=document.getElementById("regMsg");m.className="msg"+(err?" err":"");m.textContent=t}
+var MSG={created:"নিবন্ধন সম্পন্ন হয়েছে। ধন্যবাদ!",updated:"তথ্য হালনাগাদ হয়েছে।",wrong_pin:"এই নম্বর আগে নিবন্ধিত। তথ্য বদলাতে আগের পিন দিন।",bad_pin:"৪ সংখ্যার একটি পিন দিন।",invalid:"তথ্যে ভুল আছে। তারিখ ও নম্বর দেখে আবার দিন।"};
+function save(){
+  var n=document.getElementById("name").value.trim(),p=document.getElementById("phone").value.trim(),pin=document.getElementById("pin").value.trim();
+  if(n.length<2)return msg("নাম লিখুন।",1);
+  if(!/^01\d{9}$/.test(p))return msg("মোবাইল নম্বর ১১ সংখ্যার হতে হবে, যেমন 01712345678।",1);
+  if(!/^\d{4}$/.test(pin))return msg(MSG.bad_pin,1);
+  var btn=document.getElementById("save");btn.disabled=true;
+  rpc("upsert_donor",{p_name:n,p_phone:p,p_grp:document.getElementById("grp").value,p_gender:document.getElementById("gen").value,p_area:document.getElementById("areaR").value,p_last:document.getElementById("last").value||null,p_pin:pin})
+   .then(function(r){var ok=r==="created"||r==="updated";msg(MSG[r]||"কিছু একটা ভুল হয়েছে।",!ok);if(ok)render()})
+   .catch(function(){msg("সংরক্ষণ করা যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।",1)})
+   .then(function(){btn.disabled=false})}
+function tab(t){["find","reg","why"].forEach(function(x){document.getElementById(x).hidden=x!==t});
+  document.querySelectorAll(".tabs button").forEach(function(b){b.setAttribute("aria-selected",b.dataset.t===t)});window.scrollTo(0,0)}
+(function(){
+  var gw=document.getElementById("groups");
+  gw.innerHTML=GROUPS.map(function(g){return '<button class="g" aria-pressed="false" data-g="'+g+'">'+g+'</button>'}).join("");
+  gw.addEventListener("click",function(e){var b=e.target.closest(".g");if(!b)return;
+    selG=selG===b.dataset.g?"":b.dataset.g;
+    gw.querySelectorAll(".g").forEach(function(x){x.setAttribute("aria-pressed",x.dataset.g===selG)});render()});
+  fill(document.getElementById("areaF"),AREAS,"সব সমাজ");
+  fill(document.getElementById("areaR"),AREAS);
+  fill(document.getElementById("grp"),GROUPS);
+  document.getElementById("areaF").addEventListener("change",render);
+  document.getElementById("save").addEventListener("click",save);
+  document.querySelectorAll(".tabs button").forEach(function(b){b.addEventListener("click",function(){tab(b.dataset.t)})});
+  render()})();
+</script>
+
+</body>
+</html>
