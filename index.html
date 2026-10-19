@@ -59,6 +59,9 @@ h1{font-size:1.75rem;font-weight:700;line-height:1.25}
 .read h2{font-size:1.2rem;font-weight:700;line-height:1.5}
 .verse{font-weight:500;line-height:1.9;padding:10px 14px}
 .bis{font-weight:500}
+.linkbtn{background:none;border:0;color:var(--mute);font:inherit;text-decoration:underline;padding:12px;cursor:pointer}
+.adh{font-size:1.2rem;margin:8px 0 0}
+#adm h3{font-size:1.05rem;margin:22px 0 0}
 </style>
 </head>
 <body>
@@ -85,6 +88,7 @@ h1{font-size:1.75rem;font-weight:700;line-height:1.25}
     <label for="areaF">সমাজ/এলাকা</label>
     <select id="areaF"></select>
     <div id="list"></div>
+    <p style="text-align:center"><button class="linkbtn" id="admOpen">পরিচালকের জন্য</button></p>
   </section>
 
   <section id="reg" hidden>
@@ -105,6 +109,27 @@ h1{font-size:1.75rem;font-weight:700;line-height:1.25}
     <div class="note">নিবন্ধন করলে আপনার নাম, এলাকা ও মোবাইল নম্বর তালিকায় সবাই দেখতে পাবেন। নিয়ত খাঁটি রাখুন, আল্লাহ কবুল করুন।</div>
     <button class="primary" id="save">বিসমিল্লাহ, সংরক্ষণ করুন</button>
     <div id="regMsg" role="status"></div>
+  </section>
+
+  <section id="adm" hidden>
+    <h2 class="adh">সমাজ পরিচালনা</h2>
+    <label for="apin">পরিচালকের পিন</label>
+    <input id="apin" type="password" inputmode="numeric" autocomplete="off">
+    <button class="primary" id="aLogin">প্রবেশ করুন</button>
+    <div id="aBox" hidden>
+      <h3>নতুন সমাজ যোগ করুন</h3>
+      <label for="aNew">সমাজের নাম</label>
+      <input id="aNew">
+      <button class="primary" id="aAdd">যোগ করুন</button>
+      <h3>সমাজের নাম বদলান</h3>
+      <label for="aOld">কোন সমাজ</label>
+      <select id="aOld"></select>
+      <label for="aRen">নতুন নাম</label>
+      <input id="aRen">
+      <button class="primary" id="aRename">নাম বদলান</button>
+    </div>
+    <div id="aMsg" role="status"></div>
+    <p style="text-align:center"><button class="linkbtn" id="aBack">ফিরে যান</button></p>
   </section>
 
   <section id="why" hidden class="read">
@@ -183,7 +208,7 @@ function save(){
    .then(function(r){var ok=r==="created"||r==="updated";msg(MSG[r]||"কিছু একটা ভুল হয়েছে।",!ok);if(ok)render()})
    .catch(function(){msg("সংরক্ষণ করা যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।",1)})
    .then(function(){btn.disabled=false})}
-function tab(t){["find","reg","why"].forEach(function(x){document.getElementById(x).hidden=x!==t});
+function tab(t){["find","reg","why","adm"].forEach(function(x){document.getElementById(x).hidden=x!==t});
   document.querySelectorAll(".tabs button").forEach(function(b){b.setAttribute("aria-selected",b.dataset.t===t)});window.scrollTo(0,0)}
 (function(){
   var gw=document.getElementById("groups");
@@ -199,6 +224,26 @@ function tab(t){["find","reg","why"].forEach(function(x){document.getElementById
   document.getElementById("save").addEventListener("click",save);
   document.querySelectorAll(".tabs button").forEach(function(b){b.addEventListener("click",function(){tab(b.dataset.t)})});
   render()})();
+var adminPin="";
+var AM={wrong_pin:"পিন ঠিক নয়।",invalid:"নাম ঠিকমতো লিখুন।",exists:"এই নামে সমাজ আগেই আছে।",missing:"সমাজটি পাওয়া যায়নি।",added:"আলহামদুলিল্লাহ, নতুন সমাজ যোগ হয়েছে।",renamed:"আলহামদুলিল্লাহ, নাম বদলানো হয়েছে।"};
+function amsg(t,err){var m=document.getElementById("aMsg");m.className="msg"+(err?" err":"");m.textContent=t}
+function reloadAreas(){return rpc("get_areas").then(function(r){if(r&&r.length){AREAS=r.map(function(x){return x.name});fill(document.getElementById("areaF"),AREAS,"সব সমাজ");fill(document.getElementById("areaR"),AREAS);fill(document.getElementById("aOld"),AREAS)}})}
+function aFail(){amsg("করা যায়নি। ইন্টারনেট ও SQL Run হয়েছে কি না দেখুন।",1)}
+document.getElementById("admOpen").addEventListener("click",function(){tab("adm")});
+document.getElementById("aBack").addEventListener("click",function(){tab("find")});
+document.getElementById("aLogin").addEventListener("click",function(){
+  var p=document.getElementById("apin").value.trim();
+  rpc("admin_check",{p_pin:p}).then(function(ok){
+    if(ok===true){adminPin=p;document.getElementById("aBox").hidden=false;fill(document.getElementById("aOld"),AREAS);amsg("প্রবেশ সফল হয়েছে।")}
+    else amsg(AM.wrong_pin,1)}).catch(aFail)});
+document.getElementById("aAdd").addEventListener("click",function(){
+  rpc("admin_add_area",{p_pin:adminPin,p_name:document.getElementById("aNew").value}).then(function(r){
+    amsg(AM[r]||"কিছু একটা ভুল হয়েছে।",r!=="added");
+    if(r==="added"){document.getElementById("aNew").value="";reloadAreas()}}).catch(aFail)});
+document.getElementById("aRename").addEventListener("click",function(){
+  rpc("admin_rename_area",{p_pin:adminPin,p_old:document.getElementById("aOld").value,p_new:document.getElementById("aRen").value}).then(function(r){
+    amsg(AM[r]||"কিছু একটা ভুল হয়েছে।",r!=="renamed");
+    if(r==="renamed"){document.getElementById("aRen").value="";reloadAreas().then(render)}}).catch(aFail)});
 </script>
 
 </body>
