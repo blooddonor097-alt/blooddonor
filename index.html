@@ -51,12 +51,21 @@ select,input{width:100%;font:inherit;padding:11px 12px;border:1.5px solid var(--
 .read ul{padding-left:20px}
 .verse{border-left:4px solid var(--red);padding:4px 0 4px 12px;margin:10px 0;background:var(--redtint);border-radius:0 10px 10px 0}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.brand{display:flex;align-items:center;gap:14px;margin:8px 0 16px}.logo{flex:none;width:68px;height:68px}.logo img,.logo svg{width:100%;height:100%;object-fit:contain;display:block}.bt{min-width:0}.bt h1{margin:0}.bt .sub{margin:2px 0 0;font-size:.95rem}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>রক্তদান</h1>
-  <p class="sub">জঙ্গল সলিমপুর: প্রয়োজনে কাছের মানুষকেই খুঁজে নিন।</p>
+  <header class="brand">
+    <div class="logo">
+      <img src="logo.png" alt="রক্তদান লোগো" hidden onload="this.hidden=false;this.nextElementSibling.style.display='none'">
+      <svg viewBox="0 0 64 64" role="img" aria-label="রক্তদান লোগো"><path style="fill:var(--red)" d="M32 4C32 4 12 27 12 40a20 20 0 0 0 40 0C52 27 32 4 32 4z"/><path style="fill:var(--surface)" d="M29 31h6v7h7v6h-7v7h-6v-7h-7v-6h7z"/></svg>
+    </div>
+    <div class="bt">
+      <h1>রক্তদান</h1>
+      <p class="sub">জঙ্গল সলিমপুর: প্রয়োজনে কাছের মানুষকেই খুঁজে নিন।</p>
+    </div>
+  </header>
   <div class="stats">
     <div class="stat"><b id="sTotal">0</b><span>মোট দাতা</span></div>
     <div class="stat"><b id="sReady">0</b><span>এখন দিতে পারবেন</span></div>
