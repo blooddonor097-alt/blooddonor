@@ -72,6 +72,15 @@ h1{font-size:1.75rem;font-weight:700;line-height:1.25}
 .pd{grid-area:1/1;align-self:end;justify-self:end;display:flex;gap:5px;padding:0 12px 8px;z-index:1}
 .pd i{width:6px;height:6px;border-radius:50%;background:var(--mute);opacity:.35}
 .pd i.on{background:var(--red);opacity:1}
+.tabs button{font-size:.8rem}
+summary.primary{display:block;list-style:none;text-align:center;margin-top:0}
+summary.primary::-webkit-details-marker{display:none}
+.card.rq{display:block}
+.rtop{display:flex;gap:12px;align-items:center}
+.ract{display:flex;flex-wrap:wrap;gap:2px 8px;margin-top:6px}
+.ract .linkbtn{padding:8px 4px;font-size:.92rem}
+.urg{background:var(--redtint);color:var(--red)}
+.dl .card{margin:8px 0 0;background:var(--bg)}
 </style>
 </head>
 <body>
@@ -95,6 +104,7 @@ h1{font-size:1.75rem;font-weight:700;line-height:1.25}
   <nav class="tabs" role="tablist">
     <button role="tab" data-t="find" aria-controls="find" aria-selected="false"><span class="ti" aria-hidden="true">🩸</span><span>রক্তের গ্রুপ</span></button>
     <button role="tab" data-t="reg" aria-controls="reg" aria-selected="false"><span class="ti" aria-hidden="true">🙋</span><span>দাতা হোন</span></button>
+    <button role="tab" data-t="req" aria-controls="req" aria-selected="false"><span class="ti" aria-hidden="true">🆘</span><span>রক্ত লাগবে</span></button>
     <button role="tab" data-t="why" aria-controls="why" aria-selected="false"><span class="ti" aria-hidden="true">📖</span><span>রক্তদানের ফজিলত</span></button>
   </nav>
   <div class="stats">
@@ -129,6 +139,25 @@ h1{font-size:1.75rem;font-weight:700;line-height:1.25}
     <button class="primary" id="save">বিসমিল্লাহ, সংরক্ষণ করুন</button>
     <button class="linkbtn" id="del" type="button">আমার তথ্য তালিকা থেকে মুছে ফেলুন</button>
     <div id="regMsg" role="status"></div>
+  </section>
+
+  <section id="req" hidden>
+    <details id="rform" style="margin-top:8px">
+      <summary class="primary">+ নতুন রক্তের অনুরোধ দিন</summary>
+      <label for="reqG">রক্তের গ্রুপ</label><select id="reqG"></select>
+      <label for="reqA">সমাজ/এলাকা</label><select id="reqA"></select>
+      <label for="reqP">হাসপাতাল বা স্থান</label><input id="reqP">
+      <label for="reqN">রোগীর বা যোগাযোগকারীর নাম</label><input id="reqN" autocomplete="name">
+      <label for="reqT">মোবাইল নম্বর</label><input id="reqT" inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX">
+      <div class="row2">
+        <div><label for="reqD">কবে লাগবে</label><input id="reqD" type="date"></div>
+        <div><label for="reqU">জরুরি কি না</label><select id="reqU"><option value="0">সাধারণ</option><option value="1">জরুরি, আজই</option></select></div>
+      </div>
+      <div class="note">অনুরোধ ও নম্বর সবাই দেখতে পাবেন। ৪৮ ঘণ্টা পর নিজে থেকে মুছে যাবে। রক্ত পেয়ে গেলে "বন্ধ করুন" চাপুন।</div>
+      <button class="primary" id="rSave">অনুরোধ পাঠান</button>
+      <div id="rMsg" role="status"></div>
+    </details>
+    <div id="rlist"></div>
   </section>
 
   <section id="adm" hidden>
@@ -227,7 +256,7 @@ function save(){
    .then(function(r){var ok=r==="created"||r==="updated";msg(MSG[r]||"কিছু একটা ভুল হয়েছে।",!ok);if(ok)render()})
    .catch(function(){msg("সংরক্ষণ করা যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।",1)})
    .then(function(){btn.disabled=false})}
-function tab(t){["find","reg","why","adm"].forEach(function(x){document.getElementById(x).hidden=x!==t});
+function tab(t){["find","reg","req","why","adm"].forEach(function(x){document.getElementById(x).hidden=x!==t});if(t==="req")renderReq();
   document.querySelectorAll(".tabs button").forEach(function(b){b.setAttribute("aria-selected",b.dataset.t===t)});window.scrollTo(0,0)}
 (function(){
   var gw=document.getElementById("groups");
@@ -236,10 +265,10 @@ function tab(t){["find","reg","why","adm"].forEach(function(x){document.getEleme
     selG=selG===b.dataset.g?"":b.dataset.g;
     gw.querySelectorAll(".g").forEach(function(x){x.setAttribute("aria-pressed",x.dataset.g===selG)});render()});
   fill(document.getElementById("areaF"),AREAS,"সব সমাজ");
-  fill(document.getElementById("areaR"),AREAS);
+  fill(document.getElementById("areaR"),AREAS);fill(document.getElementById("reqA"),AREAS);
   fill(document.getElementById("grp"),GROUPS);
   document.getElementById("last").max=todayStr();
-  rpc("get_areas").then(function(r){if(r&&r.length){AREAS=r.map(function(x){return x.name});fill(document.getElementById("areaF"),AREAS,"সব সমাজ");fill(document.getElementById("areaR"),AREAS)}}).catch(function(){});
+  rpc("get_areas").then(function(r){if(r&&r.length){AREAS=r.map(function(x){return x.name});fill(document.getElementById("areaF"),AREAS,"সব সমাজ");fill(document.getElementById("areaR"),AREAS);fill(document.getElementById("reqA"),AREAS)}}).catch(function(){});
   document.getElementById("areaF").addEventListener("change",render);
   document.getElementById("save").addEventListener("click",save);
   document.querySelectorAll(".tabs button").forEach(function(b){b.addEventListener("click",function(){tab(b.dataset.t)})});
@@ -253,10 +282,77 @@ document.getElementById("del").addEventListener("click",function(){
     if(r==="deleted"){msg("আলহামদুলিল্লাহ, আপনার তথ্য মুছে ফেলা হয়েছে।");render()}
     else msg(r==="wrong_pin"?"পিন ঠিক নয়।":(MSG[r]||"কিছু একটা ভুল হয়েছে।"),1)
   }).catch(function(){msg("মোছা যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।",1)})});
+function donorCard(d){var s=status(d);return '<div class="card"><div class="badge">'+esc(d.grp)+'</div><div class="info"><b>'+esc(d.name)+'</b><div class="meta">'+esc(d.area)+'</div><span class="tag '+s.s+'">'+s.t+'</span></div><a class="call" href="tel:'+esc(d.phone)+'">কল করুন</a></div>'}
+function myReq(){try{return JSON.parse(localStorage.getItem("myreq")||"{}")}catch(e){return {}}}
+function saveMyReq(o){try{localStorage.setItem("myreq",JSON.stringify(o))}catch(e){}}
+function ago(s){var m=Math.floor((Date.now()-new Date(s).getTime())/6e4);if(m<1)return "এইমাত্র";if(m<60)return toBn(m)+" মিনিট আগে";var h=Math.floor(m/60);if(h<24)return toBn(h)+" ঘণ্টা আগে";return toBn(Math.floor(h/24))+" দিন আগে"}
+function rmsg(t,err){var m=document.getElementById("rMsg");m.className="msg"+(err?" err":"");m.textContent=t}
+var RM={invalid:"তথ্যে ভুল আছে। নম্বর ও তারিখ দেখে আবার দিন।",limit:"এই নম্বরে ইতিমধ্যে ৩টি সক্রিয় অনুরোধ আছে।",busy:"এখন অনেক অনুরোধ আসছে, কিছুক্ষণ পরে চেষ্টা করুন।"};
+function renderReq(){
+  var el=document.getElementById("rlist");
+  el.innerHTML='<div class="empty">আনা হচ্ছে…</div>';
+  rpc("list_requests").then(function(list){
+    if(!list.length){el.innerHTML='<div class="empty">এখন কোনো সক্রিয় অনুরোধ নেই।</div>';return}
+    var mine=myReq();
+    el.innerHTML=list.map(function(r){
+      var share=(r.urgent?"জরুরি রক্ত লাগবে: ":"রক্ত লাগবে: ")+r.grp+"\n"+r.place+", "+r.area+(r.needed_on?"\nতারিখ: "+toBn(r.needed_on):"")+"\nযোগাযোগ: "+(r.contact_name?r.contact_name+" ":"")+r.phone+"\n"+location.href;
+      return '<div class="card rq" data-id="'+esc(r.id)+'" data-g="'+esc(r.grp)+'" data-a="'+esc(r.area)+'">'
+        +'<div class="rtop"><div class="badge">'+esc(r.grp)+'</div><div class="info"><b>'+esc(r.place)+'</b>'
+        +'<div class="meta">'+esc(r.area)+(r.contact_name?' · '+esc(r.contact_name):'')+' · '+ago(r.created_at)+'</div>'
+        +(r.urgent?'<span class="tag urg">জরুরি</span> ':'')+(r.needed_on?'<span class="meta">তারিখ: '+esc(toBn(r.needed_on))+'</span>':'')
+        +'</div><a class="call" href="tel:'+esc(r.phone)+'">কল করুন</a></div>'
+        +'<div class="ract"><button class="linkbtn dn" type="button">দাতা দেখুন</button>'
+        +'<a class="linkbtn" target="_blank" rel="noopener" href="https://wa.me/?text='+encodeURIComponent(share)+'">WhatsApp-এ শেয়ার</a>'
+        +(mine[r.id]?'<button class="linkbtn cl" type="button">বন্ধ করুন</button>':'')
+        +(adminPin?'<button class="linkbtn ad" type="button">অ্যাডমিন: মুছুন</button>':'')
+        +'</div><div class="dl"></div></div>'}).join("")
+  }).catch(function(){el.innerHTML='<div class="empty">তালিকা আনা যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।</div>'})}
+function showDonors(c){
+  var box=c.querySelector(".dl");
+  if(box.dataset.open==="1"){box.innerHTML="";box.dataset.open="";return}
+  box.dataset.open="1";box.innerHTML='<div class="empty">আনা হচ্ছে…</div>';
+  rpc("list_donors",{p_group:c.dataset.g,p_area:null}).then(function(l){
+    l=l.filter(function(d){return status(d).ok});
+    l.sort(function(x,y){return (y.area===c.dataset.a)-(x.area===c.dataset.a)});
+    l=l.slice(0,8);
+    box.innerHTML=l.length?'<div class="meta" style="margin-top:8px">এখন দিতে পারবেন এমন '+esc(c.dataset.g)+' দাতা (একই সমাজ আগে):</div>'+l.map(donorCard).join(""):'<div class="empty">এই গ্রুপের এখন দিতে পারবেন এমন দাতা পাওয়া যায়নি। শেয়ার করে জানান।</div>'
+  }).catch(function(){box.innerHTML='<div class="empty">দাতার তালিকা আনা যায়নি।</div>'})}
+document.getElementById("rlist").addEventListener("click",function(e){
+  var c=e.target.closest(".card.rq");if(!c)return;
+  if(e.target.closest(".dn"))showDonors(c);
+  else if(e.target.closest(".cl")){
+    if(!confirm("অনুরোধটি বন্ধ করবেন?"))return;
+    var m=myReq();
+    rpc("close_request",{p_id:Number(c.dataset.id),p_token:m[c.dataset.id]||""}).then(function(r){
+      if(r==="closed"){delete m[c.dataset.id];saveMyReq(m)}renderReq()}).catch(function(){alert("করা যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।")})}
+  else if(e.target.closest(".ad")){
+    if(!confirm("অনুরোধটি মুছে ফেলবেন?"))return;
+    rpc("admin_delete_request",{p_pin:adminPin,p_id:Number(c.dataset.id)}).then(function(){renderReq()}).catch(function(){alert("করা যায়নি।")})}
+});
+fill(document.getElementById("reqG"),GROUPS);
+fill(document.getElementById("reqA"),AREAS);
+document.getElementById("reqD").min=todayStr();
+document.getElementById("rSave").addEventListener("click",function(){
+  var g=document.getElementById("reqG").value,a=document.getElementById("reqA").value,pl=document.getElementById("reqP").value.trim(),
+    n=document.getElementById("reqN").value.trim(),p=enDigits(document.getElementById("reqT").value.trim()),
+    nd=document.getElementById("reqD").value,u=document.getElementById("reqU").value==="1";
+  if(pl.length<2)return rmsg("হাসপাতাল বা স্থানের নাম লিখুন।",1);
+  if(!/^01\d{9}$/.test(p))return rmsg("মোবাইল নম্বর ১১ সংখ্যার হতে হবে, যেমন 01712345678।",1);
+  if(nd&&nd<todayStr())return rmsg("তারিখ আজকের আগের হতে পারে না।",1);
+  var btn=document.getElementById("rSave");btn.disabled=true;
+  rpc("create_request",{p_grp:g,p_area:a,p_place:pl,p_name:n,p_phone:p,p_urgent:u,p_needed:nd||null}).then(function(r){
+    if(r&&r.r==="created"){
+      var m=myReq();m[r.id]=r.token;saveMyReq(m);
+      rmsg("আলহামদুলিল্লাহ, অনুরোধ যোগ হয়েছে। আল্লাহ সহজ করে দিন।");
+      ["reqP","reqN","reqT","reqD"].forEach(function(i){document.getElementById(i).value=""});
+      document.getElementById("rform").open=false;renderReq()}
+    else rmsg(RM[r&&r.r]||"কিছু একটা ভুল হয়েছে।",1)})
+   .catch(function(){rmsg("পাঠানো যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।",1)})
+   .then(function(){btn.disabled=false})});
 var adminPin="";
 var AM={wrong_pin:"পিন ঠিক নয়।",invalid:"নাম ঠিকমতো লিখুন।",exists:"এই নামে সমাজ আগেই আছে।",missing:"সমাজটি পাওয়া যায়নি।",added:"আলহামদুলিল্লাহ, নতুন সমাজ যোগ হয়েছে।",renamed:"আলহামদুলিল্লাহ, নাম বদলানো হয়েছে।"};
 function amsg(t,err){var m=document.getElementById("aMsg");m.className="msg"+(err?" err":"");m.textContent=t}
-function reloadAreas(){return rpc("get_areas").then(function(r){if(r&&r.length){AREAS=r.map(function(x){return x.name});fill(document.getElementById("areaF"),AREAS,"সব সমাজ");fill(document.getElementById("areaR"),AREAS);fill(document.getElementById("aOld"),AREAS)}})}
+function reloadAreas(){return rpc("get_areas").then(function(r){if(r&&r.length){AREAS=r.map(function(x){return x.name});fill(document.getElementById("areaF"),AREAS,"সব সমাজ");fill(document.getElementById("areaR"),AREAS);fill(document.getElementById("reqA"),AREAS);fill(document.getElementById("aOld"),AREAS)}})}
 function aFail(){amsg("করা যায়নি। ইন্টারনেট ও SQL Run হয়েছে কি না দেখুন।",1)}
 document.getElementById("admOpen").addEventListener("click",function(){tab("adm")});
 document.getElementById("aBack").addEventListener("click",function(){tab("find")});
