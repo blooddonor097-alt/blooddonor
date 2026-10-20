@@ -117,6 +117,7 @@ summary.primary::-webkit-details-marker{display:none}
     <div class="groups" id="groups"></div>
     <label for="areaF">সমাজ/এলাকা</label>
     <select id="areaF"></select>
+    <div class="note" id="rqNudge">রক্ত লাগলে সরাসরি দাতাকে কল করতে পারেন। একসাথে অনেক দাতাকে জানাতে চাইলে <button class="linkbtn goReq" type="button">রক্তের অনুরোধ দিন</button></div>
     <div id="list"></div>
   </section>
 
@@ -238,7 +239,7 @@ function render(){
     document.getElementById("sReady").textContent=toBn(s.ready)}).catch(function(){});
   rpc("list_donors",{p_group:selG||null,p_area:document.getElementById("areaF").value||null}).then(function(list){
     list.sort(function(x,y){return status(y).ok-status(x).ok});
-    if(!list.length){el.innerHTML='<div class="empty">এই গ্রুপে এখনও কেউ নাম লেখাননি। "দাতা হোন" ট্যাবে গিয়ে আপনিই প্রথম দাতা হতে পারেন, ইনশাআল্লাহ।</div>';return}
+    if(!list.length){el.innerHTML='<div class="empty">এই গ্রুপে এখনও কেউ নাম লেখাননি। "দাতা হোন" ট্যাবে গিয়ে আপনিই প্রথম দাতা হতে পারেন, ইনশাআল্লাহ।<br><button class="linkbtn goReq" type="button">অথবা রক্তের অনুরোধ দিন</button></div>';return}
     el.innerHTML=list.map(function(d){var s=status(d);
       return '<div class="card"><div class="badge">'+esc(d.grp)+'</div><div class="info"><b>'+esc(d.name)+'</b><div class="meta">'+esc(d.area)+'</div><span class="tag '+s.s+'">'+s.t+'</span></div><a class="call" href="tel:'+esc(d.phone)+'">কল করুন</a></div>'}).join("")
   }).catch(function(){el.innerHTML='<div class="empty">তালিকা আনা যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।</div>'})}
@@ -349,6 +350,13 @@ document.getElementById("rSave").addEventListener("click",function(){
     else rmsg(RM[r&&r.r]||"কিছু একটা ভুল হয়েছে।",1)})
    .catch(function(){rmsg("পাঠানো যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।",1)})
    .then(function(){btn.disabled=false})});
+document.addEventListener("click",function(e){
+  if(!e.target.closest(".goReq"))return;
+  tab("req");
+  if(selG)document.getElementById("reqG").value=selG;
+  var a=document.getElementById("areaF").value;if(a)document.getElementById("reqA").value=a;
+  document.getElementById("rform").open=true;
+  document.getElementById("rform").scrollIntoView({behavior:"smooth",block:"start"})});
 var adminPin="";
 var AM={wrong_pin:"পিন ঠিক নয়।",invalid:"নাম ঠিকমতো লিখুন।",exists:"এই নামে সমাজ আগেই আছে।",missing:"সমাজটি পাওয়া যায়নি।",added:"আলহামদুলিল্লাহ, নতুন সমাজ যোগ হয়েছে।",renamed:"আলহামদুলিল্লাহ, নাম বদলানো হয়েছে।"};
 function amsg(t,err){var m=document.getElementById("aMsg");m.className="msg"+(err?" err":"");m.textContent=t}
